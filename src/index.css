@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .slick-slide > div {
+  margin: 0 10px;
+}
+
+.slick-dots li.slick-active button:before {
+  color:orange !important;
+} */
+.container{
+  /* size-[15rem] outline m-auto mt-16 grid grid-cols-9 */
+  height: 15rem;
+  width: 15rem;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: repeat(15,1fr);
+  margin: auto;
+}
+/* .cell{
+  border: 0.5px solid black;
+} */
+.food{
+  background-color: red;
+  border-radius: 50%;
+}
+.snaks{
+  background-color: green;
+}
