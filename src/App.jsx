@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Score from './components/Score';
-
+import './App.css'
 
 const PxSize = 15
 const Gamegrid = Array.from({ length: PxSize }, () => 
@@ -14,9 +13,9 @@ const genreteFood = () => {
   return [x, y];
 };
 
-function App({score}) {
-  // const[collesionType,setCollesionType]=useState(null)
-  // const[score,setScore]=useState(0)
+function App() {
+  const [score,setScore]=useState(0)
+  const [highScore,setHighScore]=useState(0)
   const [snakbody, setSnakbody] = useState(initial_snak)
   const directionRef = useRef([0, 0])
   const foodRef = useRef(genreteFood())
@@ -33,10 +32,9 @@ function App({score}) {
     const intervalId = setInterval(() => {
       setSnakbody((prevsnakbody) => {
         const newHeads = [
-          
           prevsnakbody[0][0] + directionRef.current[0],
-          prevsnakbody[0][1] + directionRef.current[1],
-          
+          prevsnakbody[0][1] + directionRef.current[1],  
+     
         ];
         if (
           newHeads[0] < 0 ||
@@ -49,6 +47,8 @@ function App({score}) {
         )
         {
           directionRef.current = [1, 0];
+          if (score > highScore) setHighScore(score); // Update high score if the current score is higher
+          setScore(0); // Reset score
           return initial_snak;
         }
         const copySnakbody = prevsnakbody.map((arr) => [...arr])
@@ -57,6 +57,7 @@ function App({score}) {
           newHeads[1] === foodRef.current[1]
         ) {
           foodRef.current = genreteFood();
+          setScore(score+1);
         } else {
           copySnakbody.pop();
         }
@@ -64,7 +65,7 @@ function App({score}) {
         copySnakbody.unshift(newHeads);
         return copySnakbody;
       });
-    }, 200);
+    }, 300);
    
     
     const hendledirection = (e) => {
@@ -88,17 +89,22 @@ function App({score}) {
     window.addEventListener('keydown', hendledirection)
     // reset code............................................
     return () => {
-      clearInterval(intervalId)
+      clearInterval(intervalId);
       window.removeEventListener("keydown", hendledirection)
     }
-  }, []);
+  }, [score,highScore]);
+
+
 
   return (
     <>
-      <div className='text-2xl font-semibold text-center mt-5'>Snake Game</div>
-      <div className={`text-sm font-semibold text-center mt-5 `}
+      <div className='text-2xl font-semibold text-center mt-36'>Snake Game</div>
+      <div className={`text-sm font-bold text-center mt-5 `}
       >
-        <Score/>
+        <p className='m-3'>High Score:{highScore}</p>
+        <p className='m-2'>Score:{score}</p>
+        
+        {/* <Score/> */}
       </div>
 
       {/* Container and cell defined.............................................. */}
