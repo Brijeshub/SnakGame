@@ -70,7 +70,7 @@ function App() {
     
     const hendledirection = (e) => {
       const keys = e.key
-      console.log(keys);
+      // console.log(keys);
       if (keys === "ArrowUp" && directionRef.current[1] != 1) {
         directionRef.current = [0, -1]
       }
